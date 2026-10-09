@@ -10,33 +10,103 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as PayTxIdRouteImport } from './routes/pay.$txId'
+import { Route as ApiPublicDeviceCompleteRouteImport } from './routes/api/public/device/complete'
+import { Route as ApiPublicDeviceTransactionRouteImport } from './routes/api/public/device/transaction'
+import { Route as ApiPublicDeviceStatusIdRouteImport } from './routes/api/public/device/status.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PayTxIdRoute = PayTxIdRouteImport.update({
+  id: '/pay/$txId',
+  path: '/pay/$txId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicDeviceCompleteRoute = ApiPublicDeviceCompleteRouteImport.update({
+  id: '/api/public/device/complete',
+  path: '/api/public/device/complete',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicDeviceTransactionRoute =
+  ApiPublicDeviceTransactionRouteImport.update({
+    id: '/api/public/device/transaction',
+    path: '/api/public/device/transaction',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicDeviceStatusIdRoute = ApiPublicDeviceStatusIdRouteImport.update({
+  id: '/api/public/device/status/$id',
+  path: '/api/public/device/status/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/pay/$txId': typeof PayTxIdRoute
+  '/api/public/device/complete': typeof ApiPublicDeviceCompleteRoute
+  '/api/public/device/transaction': typeof ApiPublicDeviceTransactionRoute
+  '/api/public/device/status/$id': typeof ApiPublicDeviceStatusIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/pay/$txId': typeof PayTxIdRoute
+  '/api/public/device/complete': typeof ApiPublicDeviceCompleteRoute
+  '/api/public/device/transaction': typeof ApiPublicDeviceTransactionRoute
+  '/api/public/device/status/$id': typeof ApiPublicDeviceStatusIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/pay/$txId': typeof PayTxIdRoute
+  '/api/public/device/complete': typeof ApiPublicDeviceCompleteRoute
+  '/api/public/device/transaction': typeof ApiPublicDeviceTransactionRoute
+  '/api/public/device/status/$id': typeof ApiPublicDeviceStatusIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/pay/$txId'
+    | '/api/public/device/complete'
+    | '/api/public/device/transaction'
+    | '/api/public/device/status/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/pay/$txId'
+    | '/api/public/device/complete'
+    | '/api/public/device/transaction'
+    | '/api/public/device/status/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/pay/$txId'
+    | '/api/public/device/complete'
+    | '/api/public/device/transaction'
+    | '/api/public/device/status/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  PayTxIdRoute: typeof PayTxIdRoute
+  ApiPublicDeviceCompleteRoute: typeof ApiPublicDeviceCompleteRoute
+  ApiPublicDeviceTransactionRoute: typeof ApiPublicDeviceTransactionRoute
+  ApiPublicDeviceStatusIdRoute: typeof ApiPublicDeviceStatusIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +118,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pay/$txId': {
+      id: '/pay/$txId'
+      path: '/pay/$txId'
+      fullPath: '/pay/$txId'
+      preLoaderRoute: typeof PayTxIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/device/complete': {
+      id: '/api/public/device/complete'
+      path: '/api/public/device/complete'
+      fullPath: '/api/public/device/complete'
+      preLoaderRoute: typeof ApiPublicDeviceCompleteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/device/transaction': {
+      id: '/api/public/device/transaction'
+      path: '/api/public/device/transaction'
+      fullPath: '/api/public/device/transaction'
+      preLoaderRoute: typeof ApiPublicDeviceTransactionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/device/status/$id': {
+      id: '/api/public/device/status/$id'
+      path: '/api/public/device/status/$id'
+      fullPath: '/api/public/device/status/$id'
+      preLoaderRoute: typeof ApiPublicDeviceStatusIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  PayTxIdRoute: PayTxIdRoute,
+  ApiPublicDeviceCompleteRoute: ApiPublicDeviceCompleteRoute,
+  ApiPublicDeviceTransactionRoute: ApiPublicDeviceTransactionRoute,
+  ApiPublicDeviceStatusIdRoute: ApiPublicDeviceStatusIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
