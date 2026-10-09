@@ -14,13 +14,183 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      customers: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          rfid_uid: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          name: string
+          rfid_uid: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          rfid_uid?: string
+        }
+        Relationships: []
+      }
+      devices: {
+        Row: {
+          api_key: string
+          id: string
+          last_seen: string | null
+          name: string
+        }
+        Insert: {
+          api_key: string
+          id: string
+          last_seen?: string | null
+          name: string
+        }
+        Update: {
+          api_key?: string
+          id?: string
+          last_seen?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          code: string
+          motor_channel: number
+          name: string
+          price_per_kg: number
+          stock_grams: number
+        }
+        Insert: {
+          code: string
+          motor_channel?: number
+          name: string
+          price_per_kg: number
+          stock_grams?: number
+        }
+        Update: {
+          code?: string
+          motor_channel?: number
+          name?: string
+          price_per_kg?: number
+          stock_grams?: number
+        }
+        Relationships: []
+      }
+      transaction_items: {
+        Row: {
+          amount: number
+          dispensed_grams: number | null
+          id: string
+          product_code: string
+          qty_grams: number
+          transaction_id: string
+        }
+        Insert: {
+          amount: number
+          dispensed_grams?: number | null
+          id?: string
+          product_code: string
+          qty_grams: number
+          transaction_id: string
+        }
+        Update: {
+          amount?: number
+          dispensed_grams?: number | null
+          id?: string
+          product_code?: string
+          qty_grams?: number
+          transaction_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transaction_items_product_code_fkey"
+            columns: ["product_code"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "transaction_items_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transactions: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          customer_id: string
+          device_id: string | null
+          id: string
+          paid_at: string | null
+          status: string
+          total: number
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          customer_id: string
+          device_id?: string | null
+          id: string
+          paid_at?: string | null
+          status?: string
+          total: number
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          customer_id?: string
+          device_id?: string | null
+          id?: string
+          paid_at?: string | null
+          status?: string
+          total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "devices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tx_counters: {
+        Row: {
+          day: string
+          n: number
+        }
+        Insert: {
+          day: string
+          n?: number
+        }
+        Update: {
+          day?: string
+          n?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      next_tx_id: { Args: never; Returns: string }
     }
     Enums: {
       [_ in never]: never
