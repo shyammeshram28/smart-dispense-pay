@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- ATM business logic lives in src/lib/atm-core.ts and takes the DB client as a parameter; ESP32 talks only to /api/public/device/* authenticated by x-device-id/x-device-key headers — keeps hardware and web paths sharing one state machine.
+- Payment status only advances PAYMENT_PENDING -> PAYMENT_SUCCESS -> COMPLETED via conditional updates — guarantees a QR can never pay or dispense twice.
