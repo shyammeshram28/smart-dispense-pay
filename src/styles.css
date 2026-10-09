@@ -142,3 +142,9 @@
     color: var(--color-foreground);
   }
 }
+
+:root {
+  --primary: oklch(0.52 0.14 155);
+  --primary-foreground: oklch(0.99 0 0);
+  --ring: oklch(0.52 0.14 155);
+}

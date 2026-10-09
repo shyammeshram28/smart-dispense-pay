@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as PayTxIdRouteImport } from './routes/pay.$txId'
 import { Route as ApiPublicDeviceCompleteRouteImport } from './routes/api/public/device/complete'
 import { Route as ApiPublicDeviceTransactionRouteImport } from './routes/api/public/device/transaction'
 import { Route as ApiPublicDeviceStatusIdRouteImport } from './routes/api/public/device/status.$id'
@@ -17,6 +19,16 @@ import { Route as ApiPublicDeviceStatusIdRouteImport } from './routes/api/public
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PayTxIdRoute = PayTxIdRouteImport.update({
+  id: '/pay/$txId',
+  path: '/pay/$txId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicDeviceCompleteRoute = ApiPublicDeviceCompleteRouteImport.update({
@@ -38,12 +50,16 @@ const ApiPublicDeviceStatusIdRoute = ApiPublicDeviceStatusIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/pay/$txId': typeof PayTxIdRoute
   '/api/public/device/complete': typeof ApiPublicDeviceCompleteRoute
   '/api/public/device/transaction': typeof ApiPublicDeviceTransactionRoute
   '/api/public/device/status/$id': typeof ApiPublicDeviceStatusIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/pay/$txId': typeof PayTxIdRoute
   '/api/public/device/complete': typeof ApiPublicDeviceCompleteRoute
   '/api/public/device/transaction': typeof ApiPublicDeviceTransactionRoute
   '/api/public/device/status/$id': typeof ApiPublicDeviceStatusIdRoute
@@ -51,6 +67,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/pay/$txId': typeof PayTxIdRoute
   '/api/public/device/complete': typeof ApiPublicDeviceCompleteRoute
   '/api/public/device/transaction': typeof ApiPublicDeviceTransactionRoute
   '/api/public/device/status/$id': typeof ApiPublicDeviceStatusIdRoute
@@ -59,18 +77,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/pay/$txId'
     | '/api/public/device/complete'
     | '/api/public/device/transaction'
     | '/api/public/device/status/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
+    | '/pay/$txId'
     | '/api/public/device/complete'
     | '/api/public/device/transaction'
     | '/api/public/device/status/$id'
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/pay/$txId'
     | '/api/public/device/complete'
     | '/api/public/device/transaction'
     | '/api/public/device/status/$id'
@@ -78,6 +102,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  PayTxIdRoute: typeof PayTxIdRoute
   ApiPublicDeviceCompleteRoute: typeof ApiPublicDeviceCompleteRoute
   ApiPublicDeviceTransactionRoute: typeof ApiPublicDeviceTransactionRoute
   ApiPublicDeviceStatusIdRoute: typeof ApiPublicDeviceStatusIdRoute
@@ -90,6 +116,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pay/$txId': {
+      id: '/pay/$txId'
+      path: '/pay/$txId'
+      fullPath: '/pay/$txId'
+      preLoaderRoute: typeof PayTxIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/device/complete': {
@@ -118,6 +158,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  PayTxIdRoute: PayTxIdRoute,
   ApiPublicDeviceCompleteRoute: ApiPublicDeviceCompleteRoute,
   ApiPublicDeviceTransactionRoute: ApiPublicDeviceTransactionRoute,
   ApiPublicDeviceStatusIdRoute: ApiPublicDeviceStatusIdRoute,
